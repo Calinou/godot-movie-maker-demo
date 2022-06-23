@@ -27,21 +27,18 @@ movie_writer/fps=240
 
 [rendering]
 
-scaling_3d/scale.movie=2.0
 textures/default_filters/anisotropic_filtering_level.movie=4
-anti_aliasing/quality/msaa.movie=2
-anti_aliasing/quality/screen_space_aa.movie=1
 textures/decals/filter.movie=4
 textures/light_projectors/filter.movie=4
-shadows/directional_shadow/size.movie=16384
+shadows/directional_shadow/size.movie=8192
 shadows/shadows/soft_shadow_quality.movie=5
-shadows/shadow_atlas/size.movie=16384
+shadows/shadow_atlas/size.movie=8192
 shadows/directional_shadow/soft_shadow_quality.movie=5
 reflections/sky_reflections/fast_filter_high_quality.movie=true
 reflections/sky_reflections/ggx_samples.movie=128
 reflections/reflection_atlas/reflection_size.movie=1024
 global_illumination/voxel_gi/quality.movie=1
-global_illumination/sdfgi/probe_ray_count.movie=5
+global_illumination/sdfgi/probe_ray_count.movie=3
 global_illumination/sdfgi/frames_to_update_lights.movie=0
 camera/depth_of_field/depth_of_field_bokeh_quality.movie=3
 environment/ssao/quality.movie=4
@@ -55,6 +52,6 @@ environment/ssil/quality.movie=4
 environment/glow/use_high_quality.movie=true
 environment/screen_space_reflection/roughness_quality.movie=3
 environment/subsurface_scattering/subsurface_scattering_quality.movie=3
-environment/volumetric_fog/volume_size.movie=128
-environment/volumetric_fog/volume_depth.movie=128
-mesh_lod/lod_change/threshold_pixels.movie=0.0
+camera/depth_of_field/depth_of_field_use_jitter.movie=true
+anti_aliasing/quality/msaa.movie=3
+anti_aliasing/quality/use_taa.movie=true

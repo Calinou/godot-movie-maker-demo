@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://sm21hcjbr5yi"]
+[gd_scene load_steps=23 format=3 uid="uid://sm21hcjbr5yi"]
 
 [ext_resource type="PackedScene" uid="uid://2mfl78e7pm8o" path="res://polyhaven/dutch_ship_large_01_4k.gltf/dutch_ship_large_01_4k.gltf" id="1_px3yg"]
 [ext_resource type="Script" path="res://animation_player.gd" id="2_wmq7m"]
@@ -34,8 +34,8 @@ glow_levels/5 = 0.0
 glow_intensity = 0.3
 glow_blend_mode = 1
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.01
-volumetric_fog_ambient_inject = 1.0
+volumetric_fog_density = 0.02
+volumetric_fog_gi_inject = 8.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rbi43"]
 
@@ -46,7 +46,7 @@ noise = SubResource("FastNoiseLite_rbi43")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c752"]
 transparency = 1
-albedo_color = Color(0.129412, 0.219608, 0.294118, 0.901961)
+albedo_color = Color(0.14902, 0.247059, 0.34902, 0.901961)
 normal_enabled = true
 normal_scale = 16.0
 normal_texture = SubResource("NoiseTexture_ot1d4")
@@ -77,6 +77,33 @@ size = Vector3(16384, 8, 16384)
 subdivide_width = 4
 subdivide_depth = 4
 
+[sub_resource type="Animation" id="Animation_03ro0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(4.53455, 11.1285, 14.2545)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.639626, 0.307991, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_uydil"]
 resource_name = "move_camera"
 length = 30.0
@@ -105,33 +132,6 @@ tracks/1/keys = {
 "values": [Vector3(-0.639626, 0.307991, 0), Vector3(-0.249506, 1.57985, 0), Vector3(-0.0575201, 2.4352, 0), Vector3(-0.235619, 4.61291, 0), Vector3(-0.380482, 7.48048, 0), Vector3(-0.383972, 10.177, 0), Vector3(-0.514872, 11.0671, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_03ro0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(4.53455, 11.1285, 14.2545)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera3D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.639626, 0.307991, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2idkt"]
 _data = {
 "RESET": SubResource("Animation_03ro0"),
@@ -150,6 +150,17 @@ albedo_color = Color(0.670588, 0.623529, 0.592157, 1)
 metallic = 1.0
 roughness = 0.0
 
+[sub_resource type="SphereMesh" id="SphereMesh_mwjkw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47tet"]
+emission_enabled = true
+emission = Color(0, 0.54902, 1, 1)
+emission_energy = 4.0
+
+[sub_resource type="FogMaterial" id="FogMaterial_1n62w"]
+density = 0.3
+edge_fade = 1.0
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -157,6 +168,7 @@ environment = SubResource("Environment_d3mel")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 1.5
 light_angular_distance = 2.0
 shadow_enabled = true
 shadow_normal_bias = 2.0
@@ -165,10 +177,12 @@ directional_shadow_blend_splits = true
 directional_shadow_max_distance = 50.0
 
 [node name="Water" type="MeshInstance3D" parent="."]
+gi_mode = 1
 mesh = SubResource("PlaneMesh_y5wge")
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, 0)
+gi_mode = 1
 mesh = SubResource("BoxMesh_b2lcd")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -186,12 +200,64 @@ script = ExtResource("2_wmq7m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.565399, 0, -0.824818, 0, 1, 0, 0.824818, 0, 0.565399, 1.44177, 3.58916, 0.549822)
+gi_mode = 1
 mesh = SubResource("SphereMesh_23rv3")
 surface_material_override/0 = SubResource("StandardMaterial3D_axthr")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.565399, 0, -0.824818, 0, 1, 0, 0.824818, 0, 0.565399, 2.05895, 3.58916, 1.45018)
+gi_mode = 1
 mesh = SubResource("SphereMesh_23rv3")
 surface_material_override/0 = SubResource("StandardMaterial3D_aunj8")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.90825, 1.0058)
+gi_mode = 1
+mesh = SubResource("SphereMesh_mwjkw")
+surface_material_override/0 = SubResource("StandardMaterial3D_47tet")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.884082, 0.407562, -0.228675, 0, 0.48932, 0.872104, 0.467332, 0.771012, -0.432599, -2.29163, 6.36524, -0.923651)
+light_energy = 25.0
+light_size = 0.3
+shadow_enabled = true
+shadow_normal_bias = 0.0
+spot_angle = 60.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(-0.968146, 0.10066, -0.229263, 0, 0.915633, 0.402015, 0.250387, 0.38921, -0.886466, -6.45332, 6.28678, -1.24607)
+light_color = Color(1, 0.36, 0.36, 1)
+light_energy = 4.0
+light_size = 0.1
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 2.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(-0.968146, 0.10066, -0.229263, 0, 0.915633, 0.402015, 0.250387, 0.38921, -0.886466, -6.45332, 6.35844, 1.13553)
+light_color = Color(0.568627, 0.705882, 1, 1)
+light_energy = 4.0
+light_size = 0.1
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 2.0
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9489, 0.136365, 2.42494)
+extents = Vector3(4, 1, 6)
+shape = 0
+material = SubResource("FogMaterial_1n62w")
+
+[node name="FogVolume2" type="FogVolume" parent="."]
+transform = Transform3D(0.424073, 0, -0.905628, 0, 1, 0, 0.905628, 0, 0.424073, 14.1261, 0.136365, -3.27037)
+extents = Vector3(4, 1, 6)
+shape = 0
+material = SubResource("FogMaterial_1n62w")
+
+[node name="FogVolume3" type="FogVolume" parent="."]
+transform = Transform3D(-0.83505, 0, -0.550175, 0, 1, 0, 0.550175, 0, -0.83505, 19.5147, 0.136365, 4.8701)
+extents = Vector3(4, 0.5, 6)
+shape = 0
+material = SubResource("FogMaterial_1n62w")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_animation_player_animation_finished"]

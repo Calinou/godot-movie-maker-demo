@@ -1,0 +1,197 @@
+[gd_scene load_steps=20 format=3 uid="uid://sm21hcjbr5yi"]
+
+[ext_resource type="PackedScene" uid="uid://2mfl78e7pm8o" path="res://polyhaven/dutch_ship_large_01_4k.gltf/dutch_ship_large_01_4k.gltf" id="1_px3yg"]
+[ext_resource type="Script" path="res://animation_player.gd" id="2_wmq7m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jvfo2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8ox8r"]
+sky_material = SubResource("ProceduralSkyMaterial_jvfo2")
+
+[sub_resource type="Environment" id="Environment_d3mel"]
+background_mode = 2
+sky = SubResource("Sky_8ox8r")
+tonemap_mode = 3
+tonemap_white = 6.0
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_bounce_feedback = 1.0
+sdfgi_cascades = 8
+sdfgi_min_cell_size = 0.05
+sdfgi_cascade0_distance = 3.2
+sdfgi_max_distance = 819.2
+sdfgi_y_scale = 0
+sdfgi_energy = 5.0
+glow_enabled = true
+glow_levels/1 = 1.0
+glow_levels/2 = 0.8
+glow_levels/3 = 0.4
+glow_levels/4 = 0.1
+glow_levels/5 = 0.0
+glow_intensity = 0.3
+glow_blend_mode = 1
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_ambient_inject = 1.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rbi43"]
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_ot1d4"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_rbi43")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c752"]
+transparency = 1
+albedo_color = Color(0.129412, 0.219608, 0.294118, 0.901961)
+normal_enabled = true
+normal_scale = 16.0
+normal_texture = SubResource("NoiseTexture_ot1d4")
+uv1_scale = Vector3(1024, 1024, 1024)
+texture_filter = 5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y5wge"]
+material = SubResource("StandardMaterial3D_3c752")
+size = Vector2(16384, 16384)
+subdivide_width = 16
+subdivide_depth = 16
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i0xfa"]
+
+[sub_resource type="NoiseTexture" id="NoiseTexture_70dbl"]
+seamless = true
+noise = SubResource("FastNoiseLite_i0xfa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gg2b0"]
+albedo_color = Color(0.286275, 0.235294, 0.141176, 1)
+albedo_texture = SubResource("NoiseTexture_70dbl")
+uv1_scale = Vector3(8192, 8192, 8192)
+texture_filter = 5
+
+[sub_resource type="BoxMesh" id="BoxMesh_b2lcd"]
+material = SubResource("StandardMaterial3D_gg2b0")
+size = Vector3(16384, 8, 16384)
+subdivide_width = 4
+subdivide_depth = 4
+
+[sub_resource type="Animation" id="Animation_uydil"]
+resource_name = "move_camera"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10, 15, 20, 25, 30),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector3(4.53455, 11.1285, 14.2545), Vector3(4.66728, 4.39695, -1.08219), Vector3(-5.48913, 7.0619, -1.32863), Vector3(11.328, 2.05, 5.442), Vector3(28.3048, 14.3603, -1.81474), Vector3(-14.2514, 12.5062, -9.74436), Vector3(-7.17428, 6.94831, 0.963423)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 10, 15, 20, 25, 30),
+"transitions": PackedFloat32Array(-2, -2, -2, -2, -2, -2, -2),
+"update": 0,
+"values": [Vector3(-0.639626, 0.307991, 0), Vector3(-0.249506, 1.57985, 0), Vector3(-0.0575201, 2.4352, 0), Vector3(-0.235619, 4.61291, 0), Vector3(-0.380482, 7.48048, 0), Vector3(-0.383972, 10.177, 0), Vector3(-0.514872, 11.0671, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_03ro0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(4.53455, 11.1285, 14.2545)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.639626, 0.307991, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2idkt"]
+_data = {
+"RESET": SubResource("Animation_03ro0"),
+"move_camera": SubResource("Animation_uydil")
+}
+
+[sub_resource type="SphereMesh" id="SphereMesh_23rv3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_axthr"]
+albedo_color = Color(1, 0.847059, 0.45098, 1)
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aunj8"]
+albedo_color = Color(0.670588, 0.623529, 0.592157, 1)
+metallic = 1.0
+roughness = 0.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d3mel")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_angular_distance = 2.0
+shadow_enabled = true
+shadow_normal_bias = 2.0
+shadow_blur = 0.5
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 50.0
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_y5wge")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, 0)
+mesh = SubResource("BoxMesh_b2lcd")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.952944, -0.180946, 0.243219, 7.45058e-09, 0.802319, 0.596895, -0.303145, -0.568808, 0.764565, 4.53455, 11.1285, 14.2545)
+fov = 72.0
+
+[node name="dutch_ship_large_01_4k" parent="." instance=ExtResource("1_px3yg")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "move_camera"
+libraries = {
+"": SubResource("AnimationLibrary_2idkt")
+}
+script = ExtResource("2_wmq7m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.565399, 0, -0.824818, 0, 1, 0, 0.824818, 0, 0.565399, 1.44177, 3.58916, 0.549822)
+mesh = SubResource("SphereMesh_23rv3")
+surface_material_override/0 = SubResource("StandardMaterial3D_axthr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.565399, 0, -0.824818, 0, 1, 0, 0.824818, 0, 0.565399, 2.05895, 3.58916, 1.45018)
+mesh = SubResource("SphereMesh_23rv3")
+surface_material_override/0 = SubResource("StandardMaterial3D_aunj8")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_animation_player_animation_finished"]

@@ -1,6 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://sm21hcjbr5yi"]
 
 [ext_resource type="PackedScene" uid="uid://2mfl78e7pm8o" path="res://polyhaven/dutch_ship_large_01_4k.gltf/dutch_ship_large_01_4k.gltf" id="1_px3yg"]
+[ext_resource type="Script" path="res://polyhaven/dutch_ship_large_01_4k.gltf/dutch_ship_large_01_4k.gd" id="2_pedk2"]
 [ext_resource type="Script" path="res://animation_player.gd" id="2_wmq7m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jvfo2"]
@@ -24,8 +25,6 @@ sdfgi_enabled = true
 sdfgi_bounce_feedback = 1.0
 sdfgi_cascades = 8
 sdfgi_min_cell_size = 0.02
-sdfgi_cascade0_distance = 1.28
-sdfgi_max_distance = 327.68
 sdfgi_y_scale = 0
 sdfgi_energy = 5.0
 glow_enabled = true
@@ -44,14 +43,14 @@ adjustment_enabled = true
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_3gm4k"]
 frequency = 0.002
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_bsec5"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_bsec5"]
 seamless = true
 noise = SubResource("FastNoiseLite_3gm4k")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rbi43"]
 fractal_octaves = 9
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_ot1d4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_ot1d4"]
 seamless = true
 as_normal_map = true
 noise = SubResource("FastNoiseLite_rbi43")
@@ -71,8 +70,8 @@ heightmap_max_layers = 64
 heightmap_texture = SubResource("NoiseTexture_bsec5")
 uv1_scale = Vector3(512, 512, 512)
 texture_filter = 5
-proximity_fade_enable = true
-proximity_fade_distance = 3.0
+proximity_fade_enabled = true
+proximity_fade_distance = 2.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_y5wge"]
 material = SubResource("StandardMaterial3D_3c752")
@@ -82,7 +81,7 @@ subdivide_depth = 16
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i0xfa"]
 
-[sub_resource type="NoiseTexture" id="NoiseTexture_70dbl"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture_70dbl"]
 seamless = true
 noise = SubResource("FastNoiseLite_i0xfa")
 
@@ -97,12 +96,6 @@ material = SubResource("StandardMaterial3D_gg2b0")
 size = Vector3(16384, 8, 16384)
 subdivide_width = 4
 subdivide_depth = 4
-
-[sub_resource type="CameraEffects" id="CameraEffects_2rg0c"]
-dof_blur_far_enabled = true
-dof_blur_far_distance = 20.0
-dof_blur_far_transition = 20.0
-dof_blur_near_enabled = true
 
 [sub_resource type="Animation" id="Animation_03ro0"]
 length = 0.001
@@ -182,7 +175,7 @@ roughness = 0.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47tet"]
 emission_enabled = true
 emission = Color(0, 0.54902, 1, 1)
-emission_energy = 4.0
+emission_energy_multiplier = 4.0
 
 [sub_resource type="FogMaterial" id="FogMaterial_1n62w"]
 density = 0.3
@@ -198,27 +191,24 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 light_energy = 1.5
 light_angular_distance = 2.0
 shadow_enabled = true
-shadow_normal_bias = 2.0
 shadow_blur = 0.5
 directional_shadow_blend_splits = true
 directional_shadow_max_distance = 50.0
 
 [node name="Water" type="MeshInstance3D" parent="."]
-gi_mode = 1
 mesh = SubResource("PlaneMesh_y5wge")
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, 0)
-gi_mode = 1
 mesh = SubResource("BoxMesh_b2lcd")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.952944, -0.180946, 0.243219, 7.45058e-09, 0.802319, 0.596895, -0.303145, -0.568808, 0.764565, 4.53455, 11.1285, 14.2545)
-effects = SubResource("CameraEffects_2rg0c")
+transform = Transform3D(0.952944, -0.180946, 0.243219, 0, 0.802319, 0.596895, -0.303145, -0.568808, 0.764565, 4.53455, 11.1285, 14.2545)
 fov = 72.0
 far = 200.0
 
 [node name="Main_dutch_ship_large_01_4k" parent="." instance=ExtResource("1_px3yg")]
+script = ExtResource("2_pedk2")
 
 [node name="dutch_ship_large_01_4k2" parent="." instance=ExtResource("1_px3yg")]
 transform = Transform3D(0.866025, 0, -0.5, -0.00648372, 0.999916, -0.0112301, 0.499958, 0.0129674, 0.865953, 0, 0, 23)
@@ -247,19 +237,16 @@ script = ExtResource("2_wmq7m")
 
 [node name="MetallicSphereYellow" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.565399, 0, -0.824818, 0, 1, 0, 0.824818, 0, 0.565399, 1.44177, 3.58916, 0.549822)
-gi_mode = 1
 mesh = SubResource("SphereMesh_23rv3")
 surface_material_override/0 = SubResource("StandardMaterial3D_axthr")
 
 [node name="MetallicSphereGray" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.565399, 0, -0.824818, 0, 1, 0, 0.824818, 0, 0.565399, 2.05895, 3.58916, 1.45018)
-gi_mode = 1
 mesh = SubResource("SphereMesh_23rv3")
 surface_material_override/0 = SubResource("StandardMaterial3D_aunj8")
 
 [node name="EmissiveSphere" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.90825, 1.0058)
-gi_mode = 1
 mesh = SubResource("SphereMesh_mwjkw")
 surface_material_override/0 = SubResource("StandardMaterial3D_47tet")
 
@@ -293,91 +280,91 @@ shadow_normal_bias = 2.0
 
 [node name="FogVolume" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9489, 0.136365, 2.42494)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume4" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6628, 0.136365, 24.2566)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume5" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30388, 0.136365, -27.6261)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume6" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.3609, 0.136365, -5.38246)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume7" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.8741, 0.136365, 5.09202)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume8" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.6491, 0.136366, -1.14561)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume9" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.8198, 0.136367, -29.4632)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume10" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.8547, 0.136367, -6.07047)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume11" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1596, 0.136367, 12.1779)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume12" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9248, 0.136367, -18.4799)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume13" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(0.151485, 0, -0.98846, 0, 1, 0, 0.98846, 0, 0.151485, -13.8033, 0.136367, -15.6521)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume14" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(0.151485, 0, -0.98846, 0, 1, 0, 0.98846, 0, 0.151485, -4.5453, -0.641198, -11.514)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume15" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(0.151485, 0, -0.98846, 0, 1, 0, 0.98846, 0, 0.151485, 11.6209, -0.641199, -15.4824)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume2" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(0.424073, 0, -0.905628, 0, 1, 0, 0.905628, 0, 0.424073, 14.1261, 0.136365, -3.27037)
-extents = Vector3(4, 1, 6)
+size = Vector3(8, 2, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 
 [node name="FogVolume3" type="FogVolume" parent="FogVolumes"]
 transform = Transform3D(-0.83505, 0, -0.550175, 0, 1, 0, 0.550175, 0, -0.83505, 19.5147, 0.136365, 4.8701)
-extents = Vector3(4, 0.5, 6)
+size = Vector3(8, 1, 12)
 shape = 0
 material = SubResource("FogMaterial_1n62w")
 

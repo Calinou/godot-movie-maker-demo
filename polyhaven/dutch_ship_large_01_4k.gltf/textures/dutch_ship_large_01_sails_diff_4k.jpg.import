@@ -3,24 +3,22 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://2qdxpsyj6vgb"
-path.s3tc="res://.godot/imported/dutch_ship_large_01_sails_diff_4k.jpg-e181b392cf933d62318578a28d476f99.s3tc.ctex"
-path.etc2="res://.godot/imported/dutch_ship_large_01_sails_diff_4k.jpg-e181b392cf933d62318578a28d476f99.etc2.ctex"
+path="res://.godot/imported/dutch_ship_large_01_sails_diff_4k.jpg-e181b392cf933d62318578a28d476f99.ctex"
 metadata={
-"imported_formats": ["s3tc", "etc2"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://polyhaven/dutch_ship_large_01_4k.gltf/textures/dutch_ship_large_01_sails_diff_4k.jpg"
-dest_files=["res://.godot/imported/dutch_ship_large_01_sails_diff_4k.jpg-e181b392cf933d62318578a28d476f99.s3tc.ctex", "res://.godot/imported/dutch_ship_large_01_sails_diff_4k.jpg-e181b392cf933d62318578a28d476f99.etc2.ctex"]
+dest_files=["res://.godot/imported/dutch_ship_large_01_sails_diff_4k.jpg-e181b392cf933d62318578a28d476f99.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true

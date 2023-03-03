@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 run/main_scene="res://node_3d.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.1")
 
 [display]
 
@@ -22,14 +22,14 @@ window/stretch/aspect="expand"
 
 [editor]
 
-movie_writer/movie_file="/home/hugo/Documents/Godot/godot-movie-writer-demo/movie.avi"
+movie_writer/movie_file="movie.avi"
 movie_writer/fps=240
 
 [rendering]
 
-textures/default_filters/anisotropic_filtering_level.movie=4
-textures/decals/filter.movie=4
-textures/light_projectors/filter.movie=4
+textures/default_filters/anisotropic_filtering_level=4
+textures/decals/filter=5
+textures/light_projectors/filter=5
 shadows/directional_shadow/size.movie=8192
 shadows/shadows/soft_shadow_quality.movie=5
 shadows/shadow_atlas/size.movie=8192
@@ -49,9 +49,13 @@ environment/ssao/half_size.movie=false
 environment/ssil/blur_passes.movie=6
 environment/ssil/adaptive_target.movie=1.0
 environment/ssil/quality.movie=4
-environment/glow/use_high_quality.movie=true
 environment/screen_space_reflection/roughness_quality.movie=3
 environment/subsurface_scattering/subsurface_scattering_quality.movie=3
 camera/depth_of_field/depth_of_field_use_jitter.movie=true
-anti_aliasing/quality/msaa.movie=3
 anti_aliasing/quality/use_taa.movie=true
+anti_aliasing/quality/msaa_3d.movie=3
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality.movie=5
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality.movie=5
+lights_and_shadows/directional_shadow/size.movie=8192
+lights_and_shadows/positional_shadow/atlas_size.movie=8192
+mesh_lod/lod_change/threshold_pixels.movie=0.0
